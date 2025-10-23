@@ -5,7 +5,7 @@ const router = express.Router();
 const Category = require('../models/Category');
 const Post = require('../models/Post');
 const { body, validationResult } = require('express-validator');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 
 // Validation rules
 const categoryValidation = [
@@ -124,7 +124,7 @@ router.get('/:id', async (req, res) => {
 // @route   POST /api/categories
 // @desc    Create a new category
 // @access  Private (Admin only)
-router.post('/', auth, categoryValidation, async (req, res) => {
+router.post('/', auth, ...categoryValidation, async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -180,7 +180,7 @@ router.post('/', auth, categoryValidation, async (req, res) => {
 // @route   PUT /api/categories/:id
 // @desc    Update a category
 // @access  Private (Admin only)
-router.put('/:id', auth, categoryValidation, async (req, res) => {
+router.put('/:id', auth, ...categoryValidation, async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -298,3 +298,4 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 module.exports = router;
+

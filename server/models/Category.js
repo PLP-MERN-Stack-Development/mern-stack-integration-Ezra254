@@ -58,3 +58,4 @@ CategorySchema.statics.getActiveCategories = function () {
 };
 
 module.exports = mongoose.model('Category', CategorySchema);
+

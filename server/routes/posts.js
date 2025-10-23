@@ -6,7 +6,7 @@ const Post = require('../models/Post');
 const Category = require('../models/Category');
 const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 
 // Validation rules
 const postValidation = [
@@ -185,7 +185,7 @@ router.get('/:id', async (req, res) => {
 // @route   POST /api/posts
 // @desc    Create a new post
 // @access  Private
-router.post('/', auth, postValidation, async (req, res) => {
+router.post('/', auth, ...postValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -237,7 +237,7 @@ router.post('/', auth, postValidation, async (req, res) => {
 // @route   PUT /api/posts/:id
 // @desc    Update a post
 // @access  Private
-router.put('/:id', auth, postValidation, async (req, res) => {
+router.put('/:id', auth, ...postValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -392,3 +392,4 @@ router.post('/:id/comments', auth, [
 });
 
 module.exports = router;
+

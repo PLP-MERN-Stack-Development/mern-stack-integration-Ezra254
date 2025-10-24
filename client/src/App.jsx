@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { authService } from './services/api'
+import { ThemeProvider } from './contexts/ThemeContext'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import PostList from './pages/PostList'
@@ -177,42 +178,44 @@ export const ProtectedRoute = ({ children }) => {
 // Main App component
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="posts" element={<PostList />} />
-          <Route path="posts/:id" element={<PostDetail />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route
-            path="create-post"
-            element={
-              <ProtectedRoute>
-                <PostForm />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="edit-post/:id"
-            element={
-              <ProtectedRoute>
-                <PostForm />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="posts" element={<PostList />} />
+            <Route path="posts/:id" element={<PostDetail />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route
+              path="create-post"
+              element={
+                <ProtectedRoute>
+                  <PostForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="edit-post/:id"
+              element={
+                <ProtectedRoute>
+                  <PostForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 
